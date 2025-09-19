@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_note_activity">Nuova Nota in NoteTand</string>
+
+    <string name="about">Info</string>
+    <string name="settings">Impostazioni</string>
+    <string name="censor_mac">Censura Indirizzi MAC</string>
+    <string name="app_theme">Tema della App</string>
+
+    <string name="note">Nota</string>
+    <string name="note_name">Nome della Nota</string>
+    <string name="new_note">Nuova Nota</string>
+    <string name="send_note">Invia Nota</string>
+    <string name="receive_notes">Ricevi Note</string>
+    <string name="delete_note">Elimina Nota</string>
+    <string name="delete_note_message">Vuoi davvero eliminare \"%s\"?</string>
+    <string name="note_saved">Nota Salvata</string>
+    <string name="note_deleted">Nota Eliminata</string>
+    <string name="note_typing_hint">Scrivi la tua nota qui...</string>
+
+    <string name="share_externally">Condividi Esternamente</string>
+    <string name="send">Invia</string>
+    <string name="save">Salva</string>
+    <string name="discard">Scarta</string>
+    <string name="delete">Elimina</string>
+    <string name="cancel">Annulla</string>
+    <string name="unsaved_changes">Modifiche Non Salvate</string>
+    <string name="unsaved_changes_message">Hai modifiche non salvate. Cosa vuoi fare?</string>
+</resources>

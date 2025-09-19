@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name" translatable="false">NoteTand</string>
+    <string name="new_note_activity">Nuova Nota in NoteTand</string>
+
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="censor_mac">Censor MAC Addresses</string>
+    <string name="app_theme">App Theme</string>
+
+    <string name="note">Note</string>
+    <string name="note_name">Note Name</string>
+    <string name="new_note">New Note</string>
+    <string name="send_note">Send Note</string>
+    <string name="receive_notes">Receive Notes</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="delete_note_message">Are you sure you want to delete \'%s\'?</string>
+    <string name="note_saved">Note Saved</string>
+    <string name="note_deleted">Note Deleted</string>
+    <string name="note_typing_hint">Type your note here...</string>
+
+    <string name="share_externally">Share Externally</string>
+    <string name="send">Send</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
+    <string name="unsaved_changes_message">You have unsaved changes. What would you like to do?</string>
+
+    <!-- Main Activity -->
+    <string name="main_title">My Notes</string>
+    <string name="btn_sync">Sync</string>
+    <string name="btn_add_note">+</string>
+    <string name="status_ready">Ready</string>
+    <string name="no_notes">0 notes</string>
+    <string name="one_note">1 note</string>
+    <string name="multiple_notes">%d notes</string>
+
+    <!-- Note Edit Activity -->
+    <string name="hint_note_name">Note name</string>
+    <string name="hint_note_content">Start typing your note here...</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_delete">Delete</string>
+    <string name="note_info_format">%d chars, %d words, %d lines</string>
+
+    <!-- Bluetooth Sync Activity -->
+    <string name="bluetooth_sync_title">Bluetooth Sync</string>
+    <string name="status_label">Status</string>
+    <string name="btn_make_discoverable">Make Discoverable</string>
+    <string name="btn_scan_devices">Scan for Devices</string>
+    <string name="btn_stop_scan">Stop Scan</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="paired_devices_label">Paired Devices:</string>
+    <string name="discovered_devices_label">Discovered Devices:</string>
+    <string name="available_devices">Available Devices</string>
+
+    <!-- Messages -->
+    <string name="bluetooth_not_supported">Bluetooth not supported</string>
+    <string name="bluetooth_disabled">Bluetooth disabled</string>
+    <string name="bluetooth_ready">Bluetooth ready</string>
+    <string name="bluetooth_permission_required">Bluetooth permission required</string>
+    <string name="no_paired_devices">No paired devices found</string>
+    <string name="scanning_devices">Scanning for devices...</string>
+    <string name="discovery_finished">Discovery finished. Found %d devices.</string>
+    <string name="connecting_to_device">Connecting to %s...</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="connected_starting_sync">Connected! Starting sync...</string>
+    <string name="sync_completed">Sync completed!</string>
+    <string name="sync_error">Sync error: %s</string>
+    <string name="connection_lost">Connection lost</string>
+    <string name="comparing_files">Comparing files...</string>
+    <string name="received_file">Received file: %s</string>
+    <string name="failed_to_save">Failed to save: %s</string>
+    <string name="waiting_connections">Waiting for incoming connections...</string>
+    <string name="discoverable_for_seconds">Device is discoverable for %d seconds</string>
+    <string name="discoverable_denied">Discoverable request denied</string>
+
+    <!-- Dialogs -->
+    <string name="delete_note_title">Delete Note</string>
+    <string name="delete_confirm">Delete</string>
+
+    <string name="unsaved_changes_title">Unsaved Changes</string>
+
+    <string name="note_exists_title">Note Already Exists</string>
+    <string name="note_exists_message">A note with the name \'%s\' already exists. Do you want to overwrite it?</string>
+    <string name="overwrite">Overwrite</string>
+
+    <string name="connect_device_title">Connect to Device</string>
+    <string name="connect_device_message">Connect to %s (%s) for sync?</string>
+    <string name="connect">Connect</string>
+
+    <!-- Errors -->
+    <string name="error_note_name_empty">Note name cannot be empty</string>
+    <string name="error_loading_note">Error loading note</string>
+    <string name="error_saving_note">Error saving note</string>
+    <string name="error_deleting_note">Error deleting note</string>
+    <string name="note_name_sanitized">Note name was sanitized for compatibility</string>
+    <string name="notes_directory_created">Notes directory created</string>
+    <string name="failed_create_directory">Failed to create notes directory</string>
+    <string name="using_internal_storage">Using internal storage</string>
+    <string name="loaded_notes">Loaded %d notes</string>
+    <string name="no_notes_create_one">No notes found. Tap + to create one.</string>
+    <string name="permissions_granted">Permissions granted</string>
+    <string name="some_permissions_denied">Some permissions denied</string>
+    <string name="failed_start_discovery">Failed to start device discovery</string>
+
+    <!-- Content Descriptions -->
+    <string name="add_note_button">Add new note</string>
+    <string name="sync_button">Sync notes via Bluetooth</string>
+    <string name="save_note_button">Save note</string>
+    <string name="delete_note_button">Delete note</string>
+</resources>

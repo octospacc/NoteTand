@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth Sync"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:paddingBottom="16dp" />
+
+    <!-- Status Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/txt_bluetooth_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Initializing..."
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:id="@+id/txt_sync_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:paddingTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btn_make_discoverable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Make Discoverable"
+            android:background="@android:drawable/btn_default"
+            android:textColor="#333333"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_scan_devices"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Scan for Devices"
+            android:background="@android:drawable/btn_default"
+            android:textColor="#333333" />
+
+    </LinearLayout>
+
+    <!-- Devices Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Available Devices"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:paddingBottom="8dp" />
+
+    <!-- Paired Devices -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paired Devices:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#666666"
+        android:paddingBottom="4dp" />
+
+    <ListView
+        android:id="@+id/list_paired_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="80dp"
+        android:maxHeight="120dp"
+        android:background="#FAFAFA"
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Discovered Devices -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Discovered Devices:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#666666"
+        android:paddingBottom="4dp" />
+
+    <ListView
+        android:id="@+id/list_discovered_devices"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FAFAFA"
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp" />
+
+    <!-- Bottom Actions -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_cancel_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:background="@android:drawable/btn_default"
+            android:textColor="#333333"
+            android:minWidth="100dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
