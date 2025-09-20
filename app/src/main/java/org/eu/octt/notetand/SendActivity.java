@@ -1,7 +1,6 @@
 package org.eu.octt.notetand;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -16,10 +15,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Set;
 
 public class SendActivity extends CustomActivity {
     BluetoothSocket socket;
@@ -87,16 +83,13 @@ public class SendActivity extends CustomActivity {
         listPairedDevices.setOnItemClickListener((parent, view, position, id) -> {
             statusLog = "";
             dialog = new AlertDialog.Builder(this)
-                    .setTitle("Sending Note")
+                    .setTitle(R.string.sending_note)
                     .setMessage("Preparing...")
                     // .setNegativeButton("Abort", null)
-                    .setNeutralButton("Close", null)
+                    .setNeutralButton(R.string.close, null)
                     .show();
-            //.create();
             setDialogCancelable(false);
-            //dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(false);
-            //dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(ListView.GONE);
-            //dialog.show();
+
             var device = pairedDevicesList.get(position);
             new Thread(() -> {
                 try {
@@ -124,16 +117,13 @@ public class SendActivity extends CustomActivity {
                     output.write(contentBytes);
 
                     writeStatus("Note sent!");
-                    //dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(ListView.VISIBLE);
-                    //dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(true);
-                    //dialog.setCancelable(true);
                     setDialogCancelable(true);
 
                     socket.getInputStream().close();
                     socket.getOutputStream().close();
                     socket.close();
                 } catch (IOException e) {
-                    // e.printStackTrace();
+                    e.printStackTrace();
                     Log.e("Bluetooth", "Connection failed", e);
                     writeStatus(e.getMessage());
                     setDialogCancelable(true);
@@ -162,7 +152,6 @@ public class SendActivity extends CustomActivity {
 
     void setDialogCancelable(boolean status) {
         runOnUiThread(() -> {
-            //dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(ListView.VISIBLE);
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(status);
             dialog.setCancelable(status);
         });

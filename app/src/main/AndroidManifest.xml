@@ -39,10 +39,6 @@
             </intent-filter>
         </activity>
 
-        <!-- <activity
-            android:name=".MainActivity1"
-            android:exported="true" /> -->
-
         <activity
             android:name=".NoteActivity"
             android:label="@string/note"
@@ -73,12 +69,7 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 
-        <!-- <activity
-            android:name=".BluetoothSyncActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity1" /> -->
-
-        <provider
+        <!-- <provider
             android:name=".NotesProvider"
             android:authorities="org.eu.octt.notetand"
             android:exported="true"
@@ -87,8 +78,7 @@
             <intent-filter>
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
-        </provider>
-
+        </provider> -->
 
     </application>
 

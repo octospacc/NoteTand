@@ -22,33 +22,14 @@ public class MainActivity extends CustomActivity {
         NoteManager.setup(this);
 
         listNotes = findViewById(R.id.list_notes);
-//        var notesList = NoteManager.getAllNoteNames(); // new ArrayList<String>();
-//        var notesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notesList);
-//        listNotes.setAdapter(notesAdapter);
-
-//        // Use Android/data/packagename/files/notes structure
-//        var notesDirectory = new File(getExternalFilesDir(null), "notes");
-//        if (!notesDirectory.exists()) {
-//            notesDirectory.mkdirs();
-//        }
-
-        // for (var file : notesDirectory.listFiles()) {
-//        for (var file : NoteManager.notesDirectory.listFiles()) {
-//            if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
-//                notesList.add(file.getName());
-//            }
-//        }
-        // notesAdapter.notifyDataSetChanged();
-
-        listNotes.setOnItemClickListener((parent, view, position, id) ->
-            launchNote(notesList.get(position), false));
+        listNotes.setOnItemClickListener((parent, view, position, id) -> launchNote(notesList.get(position), false));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        notesList = NoteManager.getAllNoteNames(); // new ArrayList<String>();
+        notesList = NoteManager.getAllNoteNames();
         var notesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notesList);
         listNotes.setAdapter(notesAdapter);
         notesAdapter.notifyDataSetChanged();

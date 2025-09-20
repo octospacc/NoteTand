@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Header with note name and buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,32 +15,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints=""
             android:hint="@string/note_name"
+            android:inputType="text"
             android:textStyle="bold"
             android:singleLine="true"
             android:imeOptions="actionNext" />
-
-        <!-- <Button
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save" /> -->
-
     </LinearLayout>
 
-    <!-- Note content editor -->
     <EditText
         android:id="@+id/edit_note_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:autofillHints=""
         android:hint="@string/note_typing_hint"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:inputType="text|textAutoCorrect|textMultiLine"
         android:scrollbars="vertical"
         android:fadeScrollbars="false" />
 
-    <!-- Footer with info and actions -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,14 +48,6 @@
             android:layout_weight="1"
             android:textSize="14sp"
             android:textColor="#666666" />
-
-        <!-- <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:visibility="gone" /> -->
-
     </LinearLayout>
 
 </LinearLayout>

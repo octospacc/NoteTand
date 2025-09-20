@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "org.eu.octt.notetand"
-        minSdk 10
+        minSdk 9
         targetSdk 35
         versionCode 1
         versionName "1.0"
@@ -22,7 +22,7 @@ android {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

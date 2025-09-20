@@ -6,6 +6,9 @@
     <string name="settings">Impostazioni</string>
     <string name="censor_mac">Censura Indirizzi MAC</string>
     <string name="app_theme">Tema della App</string>
+    <string name="font_size">Dimensioni del Testo delle Note</string>
+    <string name="font_type">Tipo di Font</string>
+    <string name="keyboard_mode">Modalità della Tastiera</string>
 
     <string name="note">Nota</string>
     <string name="note_name">Nome della Nota</string>
@@ -17,6 +20,8 @@
     <string name="note_saved">Nota Salvata</string>
     <string name="note_deleted">Nota Eliminata</string>
     <string name="note_typing_hint">Scrivi la tua nota qui...</string>
+    <string name="note_info_bar">%d caratteri, %d parole, %d righe</string>
+    <string name="sending_note">Invio Nota</string>
 
     <string name="share_externally">Condividi Esternamente</string>
     <string name="send">Invia</string>
@@ -24,6 +29,7 @@
     <string name="discard">Scarta</string>
     <string name="delete">Elimina</string>
     <string name="cancel">Annulla</string>
+    <string name="close">Chiudi</string>
     <string name="unsaved_changes">Modifiche Non Salvate</string>
     <string name="unsaved_changes_message">Hai modifiche non salvate. Cosa vuoi fare?</string>
 </resources>

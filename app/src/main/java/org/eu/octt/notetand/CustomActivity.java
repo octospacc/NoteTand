@@ -1,7 +1,6 @@
 package org.eu.octt.notetand;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;

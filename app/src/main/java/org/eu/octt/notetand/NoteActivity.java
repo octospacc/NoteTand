@@ -1,11 +1,13 @@
 package org.eu.octt.notetand;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -17,7 +19,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 public class NoteActivity extends CustomActivity {
@@ -26,8 +27,6 @@ public class NoteActivity extends CustomActivity {
     private EditText editNoteName;
     private EditText editNoteContent;
     private TextView txtNoteInfo;
-//    private Button btnSave;
-//    private Button btnDelete;
 
     private String originalNoteName;
     private String originalContent;
@@ -54,8 +53,45 @@ public class NoteActivity extends CustomActivity {
         editNoteName = findViewById(R.id.edit_note_name);
         editNoteContent = findViewById(R.id.edit_note_content);
         txtNoteInfo = findViewById(R.id.txt_note_info);
-//        btnSave = findViewById(R.id.btn_save);
-//        btnDelete = findViewById(R.id.btn_delete);
+
+        var fontSize = SettingsManager.getFontSize();
+        if (fontSize > 0)
+            editNoteContent.setTextSize(fontSize);
+
+        Integer flag = null;
+        var contentFlags = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+        switch (SettingsManager.getKeyboardMode()) {
+            case "normal":
+                editNoteContent.setInputType(contentFlags);
+                break;
+            case "no_suggestions":
+                flag = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+                break;
+            case "privacy":
+                flag = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+                break;
+        }
+        if (flag != null) {
+            editNoteContent.setInputType(contentFlags | flag);
+            editNoteName.setInputType(InputType.TYPE_CLASS_TEXT | flag);
+        }
+
+        Typeface typeface = null;
+        switch (SettingsManager.getFontType()) {
+            case "sans_serif":
+                typeface = Typeface.SANS_SERIF;
+                break;
+            case "serif":
+                typeface = Typeface.SERIF;
+                break;
+            case "monospace":
+                typeface = Typeface.MONOSPACE;
+                break;
+        }
+        if (typeface != null) {
+            editNoteContent.setTypeface(typeface);
+            editNoteName.setTypeface(typeface);
+        }
     }
 
     private void setupNotesDirectory() {
@@ -68,6 +104,7 @@ public class NoteActivity extends CustomActivity {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void loadNoteFromIntent() {
         Intent intent = getIntent();
 
@@ -80,7 +117,6 @@ public class NoteActivity extends CustomActivity {
         }
 
         if (originalNoteName == null) {
-            // originalNoteName = "Note_" + System.currentTimeMillis() + ".txt";
             originalNoteName = (new SimpleDateFormat("yyyy-MM-dd HH-mm-ss.SSS")).format(new Date()) + ' ' + EMOJIS[(new Random()).nextInt(EMOJIS.length)] + ".txt";
             isNewNote = true;
         }
@@ -98,13 +134,7 @@ public class NoteActivity extends CustomActivity {
                 originalContent = "";
                 Toast.makeText(this, "Error loading note", Toast.LENGTH_SHORT).show();
             }
-            // btnDelete.setVisibility(View.VISIBLE);
-        //} else if (originalNoteName == null && originalContent == null) {
-        //    originalContent = intent.getStringExtra("content");
-        } // else {
-        //     originalContent = "";
-        //     // btnDelete.setVisibility(View.GONE);
-        // }
+        }
 
         if (originalContent == null) {
             originalContent = "";
@@ -116,10 +146,6 @@ public class NoteActivity extends CustomActivity {
     }
 
     private void setupListeners() {
-//        btnSave.setOnClickListener(v -> saveNote());
-//
-//        btnDelete.setOnClickListener(v -> confirmDeleteNote());
-
         // Track changes to note name
         editNoteName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -157,13 +183,7 @@ public class NoteActivity extends CustomActivity {
         hasUnsavedChanges = !currentName.equals(originalNoteName) || !currentContent.equals(originalContent);
 
         // Update title to indicate unsaved changes
-        //if (getActionBar() != null) {
-            if (hasUnsavedChanges) {
-                /*getActionBar().*/setTitle("* " + getString(R.string.note) /* currentName */);
-            } else {
-                /*getActionBar().*/setTitle(getString(R.string.note) /* currentName */);
-            }
-        //}
+        setTitle((hasUnsavedChanges ? "* " : "") + getString(R.string.note));
     }
 
     private void updateNoteInfo() {
@@ -175,13 +195,12 @@ public class NoteActivity extends CustomActivity {
         if (isNewNote && !hasUnsavedChanges) {
             txtNoteInfo.setText(R.string.new_note);
         } else {
-            txtNoteInfo.setText(String.format(Locale.getDefault(), "%d chars, %d words, %d lines", characterCount, wordCount, lineCount));
+            txtNoteInfo.setText(getString(R.string.note_info_bar, characterCount, wordCount, lineCount));
         }
     }
 
     private void saveNote() {
         String noteName = editNoteName.getText().toString().trim();
-        // String content = editNoteContent.getText().toString();
 
         // Validate note name
         if (noteName.isEmpty()) {
@@ -228,12 +247,8 @@ public class NoteActivity extends CustomActivity {
             originalContent = content;
             isNewNote = false;
             hasUnsavedChanges = false;
-            // btnDelete.setVisibility(View.VISIBLE);
 
-            //if (getActionBar() != null) {
-            /*getActionBar().*/setTitle(getString(R.string.note) /* noteName */);
-            //}
-
+            setTitle(getString(R.string.note));
             Toast.makeText(this, R.string.note_saved, Toast.LENGTH_SHORT).show();
             updateNoteInfo();
         } else {
@@ -290,17 +305,6 @@ public class NoteActivity extends CustomActivity {
         }
         return true;
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @Override
     public void onBackPressed() {
