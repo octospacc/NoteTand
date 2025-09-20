@@ -10,8 +10,21 @@ android {
         applicationId "org.eu.octt.notetand"
         minSdk 9
         targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
+    }
+
+    signingConfigs {
+        release {
+            def Properties localProps = new Properties()
+            def Properties keyProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+            keyProps.load(new FileInputStream(file('../keystore.properties')))
+            storeFile file(localProps["storeFile"])
+            storePassword keyProps["storePassword"]
+            keyPassword keyProps["keyPassword"]
+            keyAlias keyProps["keyAlias"]
+        }
     }
 
     buildTypes {

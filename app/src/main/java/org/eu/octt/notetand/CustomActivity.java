@@ -15,6 +15,7 @@ abstract public class CustomActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SettingsManager.setup(this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             switch (SettingsManager.getTheme()) {
                 case "holo_dark":

@@ -46,7 +46,7 @@ public class SendActivity extends CustomActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 showTargets();
             else {
-                Toast.makeText(this, "Bluetooth permission not granted! Please retry.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.bluetooh_denied, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -59,7 +59,7 @@ public class SendActivity extends CustomActivity {
         if (requestCode == BluetoothManager.REQUEST_ENABLE_BT && resultCode == RESULT_OK)
             showTargets();
         else {
-            Toast.makeText(this, "Bluetooth permission not granted! Please retry.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.bluetooh_denied, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -76,18 +76,18 @@ public class SendActivity extends CustomActivity {
         var pairedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         for (BluetoothDevice device : pairedDevices) {
             pairedDevicesList.add(device);
-            pairedDevicesAdapter.add(device.getName() + '\n' + NoteTand.censorMac(device.getAddress()));
+            pairedDevicesAdapter.add(NoteTand.getBluetoothName(device) + '\n' + NoteTand.censorMac(device.getAddress()));
         }
         pairedDevicesAdapter.notifyDataSetChanged();
 
         listPairedDevices.setOnItemClickListener((parent, view, position, id) -> {
             statusLog = "";
             dialog = new AlertDialog.Builder(this)
-                    .setTitle(R.string.sending_note)
-                    .setMessage("Preparing...")
-                    // .setNegativeButton("Abort", null)
-                    .setNeutralButton(R.string.close, null)
-                    .show();
+                .setTitle(R.string.sending_note)
+                .setMessage("Preparing...")
+                // .setNegativeButton("Abort", null)
+                .setNeutralButton(R.string.close, null)
+                .show();
             setDialogCancelable(false);
 
             var device = pairedDevicesList.get(position);
@@ -103,7 +103,7 @@ public class SendActivity extends CustomActivity {
                     var output = socket.getOutputStream();
 
                     var noteName = getIntent().getStringExtra("note");
-                    var noteContent = NoteManager.loadNote(noteName);
+                    var noteContent = NotesManager.loadNote(noteName);
 
                     var nameBytes = noteName.getBytes("UTF-8");
                     var contentBytes = noteContent.getBytes("UTF-8");
@@ -146,8 +146,7 @@ public class SendActivity extends CustomActivity {
     }
 
     void writeStatus(String text) {
-        statusLog = statusLog + text + '\n';
-        runOnUiThread(() -> dialog.setMessage(statusLog.trim()));
+        runOnUiThread(() -> dialog.setMessage((statusLog + text + '\n').trim()));
     }
 
     void setDialogCancelable(boolean status) {

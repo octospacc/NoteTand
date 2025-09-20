@@ -5,12 +5,21 @@
     <string name="about">Info</string>
     <string name="settings">Impostazioni</string>
     <string name="censor_mac">Censura Indirizzi MAC</string>
+    <string name="block_capture">Blocca la Cattura dello Schermo</string>
     <string name="app_theme">Tema della App</string>
     <string name="font_size">Dimensioni del Testo delle Note</string>
     <string name="font_type">Tipo di Font</string>
+    <string name="text_editor">Editor di Testo</string>
     <string name="keyboard_mode">Modalità della Tastiera</string>
+    <string name="sorting">Ordinamento</string>
+    <string name="default_location">Locazione Dati Predefinita</string>
+    <string name="notifications_length">Massima Lunghezza di Notifica delle Note</string>
+    <string name="notifications_cooldown">Tempo di Attesa tra Notifiche di Note (ms)</string>
+    <string name="bluetooh_denied">Bluetooth non disponibile o permesso non fornito! Per favore riprova.</string>
+    <string name="notifications_denied">Permesso alle notifiche non fornito! Per favore riprova.</string>
 
     <string name="note">Nota</string>
+    <string name="notes">Note</string>
     <string name="note_name">Nome della Nota</string>
     <string name="new_note">Nuova Nota</string>
     <string name="send_note">Invia Nota</string>
@@ -22,14 +31,23 @@
     <string name="note_typing_hint">Scrivi la tua nota qui...</string>
     <string name="note_info_bar">%d caratteri, %d parole, %d righe</string>
     <string name="sending_note">Invio Nota</string>
+    <string name="sending_note_bluetooth">Invio della Nota via Bluetooth...</string>
+    <string name="sending_note_notifications">Invio della Nota alle Notifiche (%d caratteri/nota, %d ms/nota)...</string>
+    <string name="error_loading_note">Errore di Caricamento della Nota!</string>
+    <string name="error_saving_note">Errore di Salvataggio della Nota!</string>
+    <string name="error_deleting_note">Errore di Eliminazione della Nota!</string>
 
+    <string name="send_bluetooth">Invia con Bluetooth</string>
+    <string name="send_notifications">Invia alle Notifiche</string>
     <string name="share_externally">Condividi Esternamente</string>
+    <string name="notifications_complete">Invio delle Notifiche Completato!</string>
     <string name="send">Invia</string>
     <string name="save">Salva</string>
     <string name="discard">Scarta</string>
     <string name="delete">Elimina</string>
     <string name="cancel">Annulla</string>
     <string name="close">Chiudi</string>
+    <string name="abort">Ferma</string>
     <string name="unsaved_changes">Modifiche Non Salvate</string>
     <string name="unsaved_changes_message">Hai modifiche non salvate. Cosa vuoi fare?</string>
 </resources>

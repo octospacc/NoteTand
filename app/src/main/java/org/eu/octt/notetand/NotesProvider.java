@@ -34,7 +34,7 @@ public class NotesProvider extends DocumentsProvider {
 
     @Override
     public boolean onCreate() {
-        NoteManager.setup(getContext());
+        NotesManager.setup(getContext());
         return false;
     }
 }

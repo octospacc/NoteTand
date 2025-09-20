@@ -1,5 +1,6 @@
 package org.eu.octt.notetand;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,31 +21,40 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SettingsActivity extends CustomActivity {
-    private final ArrayList<View> settingViews = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         var listView = new ListView(this);
+        var settingViews = new ArrayList<View>();
 
-        // autosave
-        // default_location
+        // settingViews.add(createCheckboxSetting(getString(R.string.autosave_on_exit), "autosave_on_exit", true));
+        // save_mode: manual, on_close, on_pause, on_write
+
+        settingViews.add(createSpinnerSetting(R.string.sorting, "sorting", SettingsManager.SORTING_MODES));
+        settingViews.add(createSpinnerSetting(R.string.default_location, "default_location", SettingsManager.DATA_LOCATIONS));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            settingViews.add(createSpinnerSetting(getString(R.string.app_theme), "theme", SettingsManager.THEMES_FULL));
+            settingViews.add(createSpinnerSetting(R.string.app_theme, "theme", SettingsManager.THEMES_FULL));
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            settingViews.add(createSpinnerSetting(getString(R.string.app_theme), "theme", SettingsManager.THEMES_LEGACY));
+            settingViews.add(createSpinnerSetting(R.string.app_theme, "theme", SettingsManager.THEMES_LEGACY));
 
-        settingViews.add(createNumberSetting(getString(R.string.font_size), "font_size", 0, 1));
+        settingViews.add(createSpinnerSetting(R.string.text_editor, "text_editor", SettingsManager.TEXT_EDITORS));
 
-        settingViews.add(createSpinnerSetting(getString(R.string.font_type), "font_type", SettingsManager.FONT_TYPES));
+        settingViews.add(createNumberSetting(R.string.font_size, "font_size", 0, 1, false));
+        settingViews.add(createSpinnerSetting(R.string.font_type, "font_type", SettingsManager.FONT_TYPES));
 
-        settingViews.add(createSpinnerSetting(getString(R.string.keyboard_mode), "keyboard_mode", SettingsManager.KEYBOARD_MODES));
+        settingViews.add(createSpinnerSetting(R.string.keyboard_mode, "keyboard_mode", SettingsManager.KEYBOARD_MODES));
 
-        settingViews.add(createCheckboxSetting(getString(R.string.censor_mac), "censor_mac", true));
+        settingViews.add(createCheckboxSetting(R.string.censor_mac, "censor_mac", true));
+
+        settingViews.add(createCheckboxSetting(R.string.block_capture, "block_capture", false));
+
+        settingViews.add(createNumberSetting(R.string.notifications_length, "notifications_length", 512, 64, true));
+        settingViews.add(createNumberSetting(R.string.notifications_cooldown, "notifications_cooldown", 1500, 0, true));
 
         // Adapter to wrap views into ListView
         listView.setAdapter(new BaseAdapter() {
@@ -72,7 +82,13 @@ public class SettingsActivity extends CustomActivity {
         setContentView(listView);
     }
 
-    private View createCheckboxSetting(String label, String key, boolean defaultValue) {
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+    }
+
+    private View createCheckboxSetting(int label, String key, boolean defaultValue) {
         var layout = createLayout(LinearLayout.HORIZONTAL);
 
         var textView = new TextView(this);
@@ -89,7 +105,7 @@ public class SettingsActivity extends CustomActivity {
         return layout;
     }
 
-    private View createNumberSetting(String label, String key, int defaultValue, int min) {
+    private View createNumberSetting(int label, String key, int defaultValue, int min, boolean showMin) {
         var layout = createLayout(LinearLayout.HORIZONTAL);
 
         var textView = new TextView(this);
@@ -97,23 +113,25 @@ public class SettingsActivity extends CustomActivity {
         // textView.setTextSize(16);
         textView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
+        // var firstSet = new AtomicBoolean(true);
         var editNumber = new EditText(this);
         editNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editNumber.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
-            try {
-                String input = dest.toString() + source.toString();
-                int value = Integer.parseInt(input);
-                if (value >= min) {
-                    return null; // Accept the input
-                }
-            } catch (NumberFormatException e) {
-                // Ignore invalid input
-            }
-            return ""; // Reject the input
-        }});
+//        editNumber.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
+//            try {
+//                int value = Integer.parseInt(dest.toString() + source.toString());
+//                if (value >= min || firstSet.get()) {
+//                    firstSet.set(false);
+//                    return null; // Accept the input
+//                }
+//            } catch (NumberFormatException ignored) {} // Ignore invalid input
+//            return ""; // Reject the input
+//        }});
         var number = SettingsManager.prefs.getInt(key, defaultValue);
-        if (number >= min)
+        if (number >= min || showMin) {
+//            if (showMin)
+//                firstSet.set(false);
             editNumber.setText(String.valueOf(number));
+        }
         editNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -124,7 +142,8 @@ public class SettingsActivity extends CustomActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 var text = s.toString();
-                SettingsManager.prefs.edit().putInt(key, !text.isEmpty() ? Integer.parseInt(text) : 0).apply();
+                var num = !text.isEmpty() ? Integer.parseInt(text) : defaultValue;
+                SettingsManager.prefs.edit().putInt(key, num >= min ? num: defaultValue).apply();
             }
         });
 
@@ -133,7 +152,7 @@ public class SettingsActivity extends CustomActivity {
         return layout;
     }
 
-    private View createSpinnerSetting(String label, String key, String[] options) {
+    private View createSpinnerSetting(int label, String key, String[] options) {
         var layout = createLayout(LinearLayout.VERTICAL);
 
         var textView = new TextView(this);
@@ -164,7 +183,7 @@ public class SettingsActivity extends CustomActivity {
     private LinearLayout createLayout(int orientation) {
         var layout = new LinearLayout(this);
         layout.setOrientation(orientation);
-        layout.setPadding(16, 16, 16, 16);
+        layout.setPadding(16, 24, 16, 24);
         return layout;
     }
 }

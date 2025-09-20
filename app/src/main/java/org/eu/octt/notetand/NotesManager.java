@@ -12,13 +12,15 @@ import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class NoteManager {
+public class NotesManager {
     private static final String TAG = "NoteManager";
 
-    public static File notesDirectory;
+    public static File externalNotesDirectory;
+    public static File internalNotesDirectory;
 
     public static class NoteInfo {
         public String name;
@@ -34,6 +36,16 @@ public class NoteManager {
             this.size = content.getBytes().length;
             this.hash = calculateHash(content);
         }
+    }
+
+    static File getNotesDirectory() {
+        switch (SettingsManager.getDefaultLocation()) {
+            case "private_external":
+                return externalNotesDirectory;
+            case "private_internal":
+                return internalNotesDirectory;
+        }
+        return null;
     }
 
     /**
@@ -55,7 +67,7 @@ public class NoteManager {
 
     public static boolean saveNote(String noteName, String content) {
         try {
-            File noteFile = new File(notesDirectory, noteName /* + ".txt" */);
+            File noteFile = new File(getNotesDirectory(), noteName /* + ".txt" */);
             FileOutputStream fos = new FileOutputStream(noteFile);
             fos.write(content.getBytes("UTF-8"));
             fos.close();
@@ -103,7 +115,7 @@ public class NoteManager {
 
     public static String loadNote(String noteName) {
         try {
-            File noteFile = new File(notesDirectory, noteName);
+            File noteFile = new File(getNotesDirectory(), noteName);
             if (!noteFile.exists()) {
                 return null;
             }
@@ -167,8 +179,23 @@ public class NoteManager {
 
     public static List<String> getAllNoteNames() {
         var noteNames = new ArrayList<String>();
-        var files = notesDirectory.listFiles();
+        var files = getNotesDirectory().listFiles();
         if (files != null) {
+            switch (SettingsManager.getSortingMode()) {
+                case "filename":
+                    Arrays.sort(files, (o1, o2) -> {
+                        // implemented manually for old API compatibility
+                        {} // put this empty block to avoid the IDE complaining of that...
+                        return o1.getName().compareTo(o2.getName());
+                    });
+                    break;
+                case "modification":
+                    Arrays.sort(files, (o1, o2) -> {
+                        var diff = o1.lastModified() - o2.lastModified();
+                        return diff < 0 ? -1 : (diff > 0 ? 1 : 0);
+                    });
+                    break;
+            }
             for (File file : files) {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     noteNames.add(file.getName());
@@ -317,12 +344,17 @@ public class NoteManager {
     }
 
     public static void setup(Context context) {
-        if (NoteManager.notesDirectory == null) {
-            var notesDirectory = new File(context.getExternalFilesDir(null), "notes");
-            if (!notesDirectory.exists()) {
-                notesDirectory.mkdirs();
-            }
-            NoteManager.notesDirectory = notesDirectory;
+        if (internalNotesDirectory == null) {
+            internalNotesDirectory = new File(context.getFilesDir(), "notes");
+            if (!internalNotesDirectory.exists())
+                internalNotesDirectory.mkdirs();
+        }
+        if (externalNotesDirectory == null) {
+            externalNotesDirectory = new File(context.getExternalFilesDir(null), "notes");
+            if (!externalNotesDirectory.exists())
+                externalNotesDirectory.mkdirs();
+            // if (!externalNotesDirectory.exists() && internalNotesDirectory.exists())
+            //     SettingsManager.prefs.edit().putString("default_location", "private_internal").apply();
         }
     }
 }

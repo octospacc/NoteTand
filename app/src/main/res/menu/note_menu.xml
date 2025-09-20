@@ -11,8 +11,15 @@
     <item
         android:id="@+id/action_send"
         android:icon="@android:drawable/ic_menu_send"
-        android:title="@string/send"
+        android:title="@string/send_bluetooth"
         android:showAsAction="ifRoom"
+        tools:targetApi="honeycomb" />
+
+    <item
+        android:id="@+id/action_send_notifications"
+        android:icon="@android:drawable/ic_menu_slideshow"
+        android:title="@string/send_notifications"
+        android:showAsAction="never"
         tools:targetApi="honeycomb" />
 
     <item

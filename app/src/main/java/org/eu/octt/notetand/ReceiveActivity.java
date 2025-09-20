@@ -49,7 +49,7 @@ public class ReceiveActivity extends CustomActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 runServer();
             else {
-                Toast.makeText(this, "Bluetooth permission not granted! Please retry.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.bluetooh_denied, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -62,7 +62,7 @@ public class ReceiveActivity extends CustomActivity {
         if (requestCode == BluetoothManager.REQUEST_ENABLE_BT && resultCode == RESULT_OK)
             runServer();
         else {
-            Toast.makeText(this, "Bluetooth permission not granted! Please retry.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.bluetooh_denied, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -80,7 +80,7 @@ public class ReceiveActivity extends CustomActivity {
                     socket = server.accept();
 
                     var client = socket.getRemoteDevice();
-                    writeStatus("Connected: " + client.getName() + " : " + NoteTand.censorMac(client.getAddress()));
+                    writeStatus("Connected: " + NoteTand.getBluetoothName(client) + " : " + NoteTand.censorMac(client.getAddress()));
                     writeStatus("Reading data...");
 
                     var titleLength = ByteBuffer.wrap(readFully(4)).getInt();
@@ -92,7 +92,7 @@ public class ReceiveActivity extends CustomActivity {
                     var noteBody = new String(bodyBytes, "UTF-8");
 
                     if (titleLength == titleBytes.length && bodyLength == bodyBytes.length) {
-                        NoteManager.saveNote(noteTitle, noteBody);
+                        NotesManager.saveNote(noteTitle, noteBody);
                         writeStatus("Received and saved note (" + titleLength + " + " + bodyLength + " bytes): " + noteTitle);
                     } else {
                         writeStatus("Content length mismatch! Expected " + titleLength + " + " + bodyLength + ", got " + titleBytes.length + " + " + bodyBytes.length);
